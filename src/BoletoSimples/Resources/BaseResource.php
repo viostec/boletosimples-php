@@ -3,7 +3,6 @@
 namespace BoletoSimples;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Message\Response;
 
 class BaseResource {
     /**
@@ -80,7 +79,7 @@ class BaseResource {
         $status = $response->getStatusCode();
 
         $body = $response->getBody()->getContents();
-        $json = (array)\GuzzleHttp\json_decode($body);
+        $json = (array) json_decode($body);
 
         if ($status >= 200 && $status <= 299) {
             if( $json) {
@@ -156,8 +155,9 @@ class BaseResource {
         /** @var $response \GuzzleHttp\Psr7\Response */
 
         if ($response->getStatusCode() >= 400 && $response->getStatusCode() <= 599) {
-            new ResponseError($response);
+            throw new ResponseError($response);
         }
+
         return $response;
     }
 

@@ -2,6 +2,8 @@
 
 namespace BoletoSimples;
 
+use GuzzleHttp\Psr7\Response;
+
 class ResponseError extends \Exception {
     /**
      * @var Response
@@ -9,17 +11,28 @@ class ResponseError extends \Exception {
     public $response = null;
 
     /**
+     * @var array
+     */
+    public $errors;
+
+    /**
      * Constructor method.
      */
-    public function __construct($response) {
+    public function __construct(Response $response) {
         $this->response = $response;
 
         $body = $this->response->getBody()->getContents();
         $json = json_decode($body);
 
         if (isset($json->errors)) {
-            $this->message = $json->errors;
-            throw $this;
+            $this->errors = (array)$json->errors;
         }
+
+        parent::__construct("Erro na requisição ao servidor", $response->getStatusCode());
+    }
+
+    public function getErrors(): array
+    {
+        return $this->errors;
     }
 }
