@@ -106,7 +106,7 @@ class BaseResource {
             $options = ['json' => $attributes];
         }
 
-        $response = self::sendRequest($method, $path, $options);
+        $response = self::_sendRequest($method, $path, $options);
         return $this->parseResponse($response);
     }
 
@@ -140,7 +140,7 @@ class BaseResource {
 
     private static function _all($params = array()) {
         $class = get_called_class();
-        $response = self::sendRequest('GET', $class::element_name_plural(), ['query' => $params]);
+        $response = self::_sendRequest('GET', $class::element_name_plural(), ['query' => $params]);
         $collection = [];
         foreach ($response->json() as $attributes) {
             $collection[] = new $class($attributes);
@@ -148,7 +148,7 @@ class BaseResource {
         return $collection;
     }
 
-    private static function _sendRequest($method, $path, $options = []) {
+    protected static function _sendRequest($method, $path, $options = []) {
         $options = array_merge(self::$default_options, $options);
         $method = strtolower($method);
         $response = self::$client->$method($path, $options);
