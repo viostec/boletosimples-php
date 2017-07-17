@@ -1,25 +1,23 @@
 {
-	"name": "boletosimples/boletosimples",
+	"name": "viostec/boletosimples",
 	"type": "library",
-	"description": "A PHP client library for easily accessing Boleto Simples API.",
+	"description": "Adaptação da biblioteca oficial do Boleto Simples em PHP para suportar Guzzle 6.",
 	"keywords": ["boleto","simples","boletosimples","ecommerce"],
 	"homepage": "http://api.boletosimples.com.br",
 	"license": "MIT",
 	"authors": [
 		{
-			"name": "Rafael Lima",
-			"email": "contato@rafael.adm.br",
-			"homepage": "http://rafael.adm.br/"
+			"name": "Kaléu Caminha",
+			"email": "kaleu.caminha@gmail.com"
 		}
 	],
   "support": {
-    "email": "suporte@boletosimples.com.br",
-    "issues": "http://github.com/BoletoSimples/boletosimples-php/issues",
-    "sources": "https://github.com/BoletoSimples/boletosimples-php"
+    "email": "kaleu@vios.com.br",
+    "issues": "http://github.com/viostec/boletosimples-php/issues",
+    "sources": "https://github.com/viostec/boletosimples-php"
   },
   "require": {
-    "guzzlehttp/guzzle": "5.*",
-    "commerceguys/guzzle-oauth2-plugin": "2.*@beta"
+    "guzzlehttp/guzzle": "6.*"
 	},
   "require-dev": {
     "phpunit/phpunit": "4.5.*",
