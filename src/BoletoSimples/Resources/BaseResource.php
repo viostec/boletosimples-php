@@ -153,12 +153,8 @@ class BaseResource {
         $method = strtolower($method);
         $response = self::$client->$method($path, $options);
 
-        /** @var $response Response */
-//    pr($response);
-//      pr($response->getBody()->getContents());
-//    exit;
-//    $response = self::$client->send($request);
-//    \BoletoSimples::$last_request = new LastRequest(null, $response);
+        /** @var $response \GuzzleHttp\Psr7\Response */
+
         if ($response->getStatusCode() >= 400 && $response->getStatusCode() <= 599) {
             new ResponseError($response);
         }
