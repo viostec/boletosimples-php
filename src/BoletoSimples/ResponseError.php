@@ -18,8 +18,6 @@ class ResponseError extends \Exception {
         $json = json_decode($body);
 
         if (isset($json->errors)) {
-            pr($json->errors);
-            exit;
             $this->message = $json->errors;
             throw $this;
         }
