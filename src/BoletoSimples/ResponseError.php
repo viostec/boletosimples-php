@@ -3,21 +3,25 @@
 namespace BoletoSimples;
 
 class ResponseError extends \Exception {
-  /**
-   * GuzzleHttp\Message\Response object
-   */
-  public $response = null;
+    /**
+     * @var Response
+     */
+    public $response = null;
 
-  /**
-   * Constructor method.
-   */
-  public function __construct($response) {
-    $this->response = $response;
+    /**
+     * Constructor method.
+     */
+    public function __construct($response) {
+        $this->response = $response;
 
-    $json = $response->json();
-    if (isset($json['error'])) {
-      $this->message = $json['error'];
-      throw $this;
+        $body = $this->response->getBody()->getContents();
+        $json = json_decode($body);
+
+        if (isset($json->errors)) {
+            pr($json->errors);
+            exit;
+            $this->message = $json->errors;
+            throw $this;
+        }
     }
-  }
 }
