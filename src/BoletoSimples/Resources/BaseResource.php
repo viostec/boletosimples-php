@@ -3,6 +3,7 @@
 namespace BoletoSimples;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 
 class BaseResource {
     /**
@@ -75,14 +76,14 @@ class BaseResource {
         return $this->_request($action);
     }
 
-    public function parseResponse($response) {
+    public function parseResponse(Response $response) {
         $status = $response->getStatusCode();
 
         $body = $response->getBody()->getContents();
         $json = (array) json_decode($body);
 
         if ($status >= 200 && $status <= 299) {
-            if( $json) {
+            if($json) {
                 $this->_attributes =  $json;
             }
             return true;
@@ -139,9 +140,14 @@ class BaseResource {
 
     private static function _all($params = array()) {
         $class = get_called_class();
+
+        /** @var  $response Response*/
         $response = self::_sendRequest('GET', $class::element_name_plural(), ['query' => $params]);
+        $body = $response->getBody()->getContents();
+        $json = (array) json_decode($body);
+
         $collection = [];
-        foreach ($response->json() as $attributes) {
+        foreach ($json as $attributes) {
             $collection[] = new $class($attributes);
         }
         return $collection;
