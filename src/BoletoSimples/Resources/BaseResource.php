@@ -158,6 +158,8 @@ class BaseResource {
         $method = strtolower($method);
         $response = self::$client->$method($path, $options);
 
+        /** @var $response \GuzzleHttp\Psr7\Response */
+
         if ($response->getStatusCode() >= 400 && $response->getStatusCode() <= 599) {
             new ResponseError($response);
         }
