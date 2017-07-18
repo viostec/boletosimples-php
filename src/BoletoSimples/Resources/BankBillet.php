@@ -23,6 +23,7 @@ class BankBillet extends BaseResource
         if (!$cnpj_cpf) {
             throw new \Exception("Couldn't find ".get_called_class()." without an cnpj or cpf.");
         }
+
         /** @var Response $response */
         $response = self::_sendRequest('GET', 'bank_billets/cnpj_cpf', ['query' => ['q' => $cnpj_cpf]]);
         $body = $response->getBody()->getContents();
@@ -40,6 +41,7 @@ class BankBillet extends BaseResource
         if (!$status) {
             throw new \Exception("Couldn't find ".get_called_class()." without an status.");
         }
+
         /** @var Response $response */
         $response = self::_sendRequest('GET', 'bank_billets/status', ['query' => ['q' => $status]]);
         $body = $response->getBody()->getContents();
@@ -57,9 +59,14 @@ class BankBillet extends BaseResource
         if (!$our_number) {
             throw new \Exception("Couldn't find ".get_called_class()." without an our_number.");
         }
+
+        /** @var Response $response */
         $response = self::_sendRequest('GET', 'bank_billets/our_number', ['query' => ['q' => $our_number]]);
+        $body = $response->getBody()->getContents();
+        $json = (array) json_decode($body);
+
         $collection = [];
-        foreach ($response->json() as $attributes) {
+        foreach ($json as $attributes) {
             $collection[] = new BankBillet($attributes);
         }
         return $collection;
