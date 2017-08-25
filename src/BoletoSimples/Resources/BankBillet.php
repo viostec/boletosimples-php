@@ -49,7 +49,7 @@ class BankBillet extends BaseResource
 
         $collection = [];
         foreach ($json as $attributes) {
-            $collection[] = new BankBillet($attributes);
+            $collection[] = new BankBillet((array) $attributes);
         }
         return $collection;
     }
