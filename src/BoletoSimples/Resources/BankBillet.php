@@ -36,14 +36,21 @@ class BankBillet extends BaseResource
         return $collection;
     }
 
-    public static function status($status)
+    public static function status($status, $page = 1, $per_page = 25)
     {
         if (!$status) {
             throw new \Exception("Couldn't find ".get_called_class()." without an status.");
         }
 
+        $requestParms = [
+            'q' => $status,
+            'page' => $page,
+            'per_page' => $per_page
+        ];
+
         /** @var Response $response */
-        $response = self::_sendRequest('GET', 'bank_billets/status', ['query' => ['q' => $status]]);
+        $response = self::_sendRequest('GET', 'bank_billets/status', ['query' => $requestParms]);
+
         $body = $response->getBody()->getContents();
         $json = (array) json_decode($body);
 
