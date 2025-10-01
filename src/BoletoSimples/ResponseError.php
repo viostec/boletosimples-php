@@ -13,7 +13,7 @@ class ResponseError extends \Exception {
     /**
      * @var array
      */
-    public $errors;
+    public $errors = [];
 
     /**
      * Constructor method.
